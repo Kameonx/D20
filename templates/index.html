@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dice Roller</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background-color: #2d2d2d;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+        }
+        h1 {
+            color: #7289da;
+            margin-bottom: 2rem;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            margin: 1.5rem 0;
+            position: relative;
+        }
+        li:not(:first-child)::before {
+            content: "";
+            display: block;
+            width: 60%;
+            height: 2px;
+            background: #3e3e3e;
+            position: absolute;
+            top: -0.75rem;
+            left: 20%;
+        }
+        .d20-button a {
+            font-size: 1.8rem;
+            padding: 1rem 2rem;
+            background-color: #43b581;
+            border-color: #43b581;
+            margin-bottom: 2rem;
+        }
+        .d20-button a:hover {
+            background-color: #3aa371;
+            border-color: #3aa371;
+        }
+        a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 0.5rem 1rem;
+            border: 2px solid #7289da;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            min-width: 120px;
+        }
+        a:hover {
+            background-color: #7289da;
+            color: #ffffff;
+        }
+        .multiplier {
+            margin: 1rem 0;
+            text-align: center;
+        }
+        .multiplier label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #7289da;
+        }
+        .multiplier input {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: 2px solid #7289da;
+            border-radius: 5px;
+            background-color: #3e3e3e;
+            color: #ffffff;
+            width: 60px; /* Adjusted width */
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎲 Dice Roller</h1>
+        <ul>
+            <li class="d20-button"><a href="#" onclick="rollDice('d20')">Roll D20</a></li>
+            <li><a href="#" onclick="rollDice('d8')">Roll D8</a></li>
+            <li><a href="#" onclick="rollDice('d6')">Roll D6</a></li>
+            <li><a href="#" onclick="rollDice('d4')">Roll D4</a></li>
+        </ul>
+        <div class="multiplier">
+            <label for="multiplier">Multiplier</label>
+            <input type="number" id="multiplier" value="1" placeholder="1" />
+        </div>
+    </div>
+
+    <script>
+        function rollDice(diceType) {
+            const multiplier = document.getElementById('multiplier').value;
+            window.history.replaceState({}, '', `/?multiplier=${multiplier}`);
+            window.location.href = `/${diceType}?multiplier=${multiplier}`;
+        }
+
+        // Preserve multiplier when navigating back to home
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const multiplier = urlParams.get('multiplier');
+            if (multiplier) {
+                document.getElementById('multiplier').value = multiplier;
+            }
+        }
+    </script>
+</body>
+</html>
