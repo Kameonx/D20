@@ -17,14 +17,22 @@
             align-items: center;
         }
         .container {
-            background-color: #2d2d2d;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            background-color: #3e3e3e;
+            padding: 2.5vh;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
             text-align: center;
-            max-width: 100%;
-            width: 100%;
-            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .roll-container {
+            background-color: #4e4e4e;
+            padding: 5vh;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            text-align: center;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -32,7 +40,8 @@
         }
         h1 {
             color: #7289da;
-            margin-bottom: 2rem;
+            margin-bottom: 3.5vh;
+            font-size: 5.5vw;
         }
         ul {
             list-style: none;
@@ -40,7 +49,7 @@
             margin: 0;
         }
         li {
-            margin: 1rem 0;
+            margin: 2.5vh 0;
             position: relative;
         }
         li:not(:first-child)::before {
@@ -48,17 +57,20 @@
             display: block;
             width: 60%;
             height: 2px;
-            background: #3e3e3e;
+            background: #5e5e5e;
             position: absolute;
-            top: -0.75rem;
+            top: -1.25vh;
             left: 20%;
         }
         .d20-button a {
-            font-size: 1.8rem;
-            padding: 1rem 2rem;
+            font-size: 3vw;
+            padding: 2.5vh 5.5vw;
             background-color: #43b581;
             border-color: #43b581;
-            margin-bottom: 1rem;
+            margin-bottom: 2.5vh;
+            display: inline-block;
+            border-radius: 9px;
+            transition: all 0.3s ease;
         }
         .d20-button a:hover {
             background-color: #3aa371;
@@ -67,80 +79,103 @@
         a {
             color: #ffffff;
             text-decoration: none;
-            font-size: 1.2rem;
-            padding: 0.5rem 1rem;
-            border: 2px solid #7289da;
-            border-radius: 5px;
+            font-size: 2.2vw;
+            padding: 2.2vh 4.5vw;
+            border: 2.5px solid #7289da;
+            border-radius: 9px;
             transition: all 0.3s ease;
             display: inline-block;
-            min-width: 120px;
+            min-width: 25vw;
         }
         a:hover {
             background-color: #7289da;
             color: #ffffff;
         }
         .multiplier {
-            margin: 1rem 0;
+            margin: 2.5vh 0;
             text-align: center;
         }
         .multiplier label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1.25vh;
             color: #7289da;
+            font-size: 2.2vw;
         }
         .multiplier input {
-            padding: 0.5rem 1rem;
-            font-size: 1rem;
-            border: 2px solid #7289da;
-            border-radius: 5px;
-            background-color: #3e3e3e;
+            padding: 2.2vh 4.5vw;
+            font-size: 2.2vw;
+            border: 2.5px solid #7289da;
+            border-radius: 9px;
+            background-color: #5e5e5e;
             color: #ffffff;
-            width: 80px;
+            width: 20vw;
             text-align: center;
         }
 
         /* Media queries for smaller screens */
         @media (max-width: 768px) {
             .container {
-                padding: 1.5rem;
+                padding: 1.5vh;
             }
-            .d20-button a,
+            .roll-container {
+                padding: 3vh;
+            }
+            h1 {
+                font-size: 7vw;
+            }
+            .d20-button a {
+                font-size: 3.5vw;
+                padding: 3vh 6.5vw;
+            }
             a {
-                font-size: 1.5rem;
-                padding: 0.75rem 1.5rem;
+                font-size: 2.5vw;
+                padding: 2.5vh 5vw;
+                min-width: 30vw;
             }
             .multiplier input {
-                width: 60px;
+                width: 25vw;
             }
         }
 
         @media (max-width: 480px) {
             .container {
-                padding: 1rem;
+                padding: 0.5vh;
             }
-            .d20-button a,
+            .roll-container {
+                padding: 1.5vh;
+            }
+            h1 {
+                font-size: 8.5vw;
+            }
+            .d20-button a {
+                font-size: 4vw;
+                padding: 3.5vh 7.5vw;
+            }
             a {
-                font-size: 1.2rem;
-                padding: 0.5rem 1rem;
+                font-size: 2.8vw;
+                padding: 2.8vh 5.5vw;
+                min-width: 35vw;
             }
             .multiplier input {
-                width: 50px;
+                width: 30vw;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎲 Dice Roller</h1>
-        <ul>
-            <li class="d20-button"><a href="#" onclick="rollDice('d20')">Roll D20</a></li>
-            <li><a href="#" onclick="rollDice('d8')">Roll D8</a></li>
-            <li><a href="#" onclick="rollDice('d6')">Roll D6</a></li>
-            <li><a href="#" onclick="rollDice('d4')">Roll D4</a></li>
-        </ul>
-        <div class="multiplier">
-            <label for="multiplier">Multiplier</label>
-            <input type="number" id="multiplier" value="1" placeholder="1" />
+        <div class="roll-container">
+            <h1>🎲 Dice Roller</h1>
+            <ul>
+                <li class="d20-button"><a href="#" onclick="rollDice('d20')">Roll D20</a></li>
+                <li><a href="#" onclick="rollDice('d8')">Roll D8</a></li>
+                <li><a href="#" onclick="rollDice('d6')">Roll D6</a></li>
+                <li><a href="#" onclick="rollDice('d4')">Roll D4</a></li>
+            </ul>
+            <div class="multiplier">
+                <label for="multiplier">Multiplier</label>
+                <input type="number" id="multiplier" value="1" placeholder="1" />
+            </div>
         </div>
     </div>
 
