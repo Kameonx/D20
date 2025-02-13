@@ -15,6 +15,8 @@ def roll_dice(dice_type, multiplier):
         rolls = [random.randint(1, 6) for _ in range(multiplier)]
     elif dice_type == 'd8':
         rolls = [random.randint(1, 8) for _ in range(multiplier)]
+    elif dice_type == 'd10':
+        rolls = [random.randint(1, 10) for _ in range(multiplier)]
     elif dice_type == 'd20':
         rolls = [random.randint(1, 20) for _ in range(multiplier)]
     total = sum(rolls)
@@ -37,6 +39,12 @@ def roll_d8():
     multiplier = int(request.args.get('multiplier', 1))
     result, rolls = roll_dice('d8', multiplier)
     return render_template('dice_roll.html', dice_type='D8', result=result, rolls=rolls)
+
+@app.route('/d10')
+def roll_d10():
+    multiplier = int(request.args.get('multiplier', 1))
+    result, rolls = roll_dice('d10', multiplier)
+    return render_template('dice_roll.html', dice_type='D10', result=result, rolls=rolls)
 
 @app.route('/d20')
 def roll_d20():
