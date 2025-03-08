@@ -27,6 +27,8 @@ def roll_dice(dice_type, multiplier):
         rolls = [random.randint(1, 7) for _ in range(multiplier)]
     elif dice_type == 'd9':
         rolls = [random.randint(1, 9) for _ in range(multiplier)]
+    elif dice_type == 'd100':
+        rolls = [random.randint(1, 100) for _ in range(multiplier)]
     elif dice_type.startswith('dx_'):
         sides = int(dice_type.split('_')[1])
         rolls = [random.randint(1, sides) for _ in range(multiplier)]
@@ -99,6 +101,12 @@ def roll_custom_dice():
     sides = max(2, sides)
     result, rolls = roll_dice(f'dx_{sides}', multiplier)
     return render_template('dice_roll.html', dice_type=f'D{sides}', result=result, rolls=rolls)
+
+@app.route('/d100')
+def roll_d100():
+    multiplier = int(request.args.get('multiplier', 1))
+    result, rolls = roll_dice('d100', multiplier)
+    return render_template('dice_roll.html', dice_type='D100', result=result, rolls=rolls)
 
 @app.route('/coin')
 def toss_coin():
