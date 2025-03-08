@@ -126,6 +126,28 @@
             text-align: center;
         }
 
+        .multiplier-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 0.8rem;
+            gap: 0.5rem;
+        }
+
+        .multiplier-btn {
+            background-color: #5e5e5e;
+            color: #ffffff;
+            border: 1px solid #7289da;
+            border-radius: 4px;
+            padding: 0.3rem 0.5rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .multiplier-btn:hover {
+            background-color: #7289da;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 1.5rem;
@@ -170,6 +192,94 @@
                 max-width: 150px;
             }
         }
+
+        .multiplier-input-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            max-width: 200px;
+        }
+
+        .multiplier-arrows {
+            display: flex;
+            flex-direction: column;
+            margin-left: 5px;
+        }
+
+        .arrow-btn {
+            background-color: #5e5e5e;
+            color: #ffffff;
+            border: 1px solid #7289da;
+            border-radius: 4px;
+            width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s ease;
+            padding: 0;
+            margin: 1px 0;
+        }
+
+        .arrow-btn:hover {
+            background-color: #7289da;
+        }
+
+        .custom-dice-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .custom-dice-input {
+            width: 50px;
+            padding: 0.4rem;
+            margin-left: 10px;
+            font-size: 1rem;
+            border: 2px solid #7289da;
+            border-radius: 6px;
+            background-color: #5e5e5e;
+            color: #ffffff;
+            text-align: center;
+        }
+        
+        .custom-dice a {
+            flex-grow: 1;
+            background-color: #e67e22;
+            border-color: #d35400;
+        }
+
+        .coin-toss-button a {
+            background-color: #3b88c3;
+            border: 2px solid #2a6496;
+        }
+
+        .reset-btn {
+            background-color: #ff4f4f;
+            border: 2px solid #bb1f1f;
+            font-size: 0.8rem;
+        }
+
+        .reset-container {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .custom-dice-arrows {
+            display: flex;
+            flex-direction: column;
+            margin-left: 5px;
+        }
+
+        .custom-input-container {
+            display: inline-flex;
+            align-items: center;
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
@@ -179,13 +289,47 @@
             <ul>
                 <li class="d20-button"><a href="#" onclick="rollDice('d20')">Roll D20</a></li>
                 <li><a href="#" onclick="rollDice('d10')">Roll D10</a></li>
+                <li><a href="#" onclick="rollDice('d9')">Roll D9</a></li>
                 <li><a href="#" onclick="rollDice('d8')">Roll D8</a></li>
+                <li><a href="#" onclick="rollDice('d7')">Roll D7</a></li>
                 <li><a href="#" onclick="rollDice('d6')">Roll D6</a></li>
+                <li><a href="#" onclick="rollDice('d5')">Roll D5</a></li>
                 <li><a href="#" onclick="rollDice('d4')">Roll D4</a></li>
+                <li><a href="#" onclick="rollDice('d3')">Roll D3</a></li>
+                <li class="custom-dice">
+                    <div class="custom-dice-container">
+                        <a href="#" onclick="rollCustomDice()">Roll DX</a>
+                        <div class="custom-input-container">
+                            <input type="number" id="customDice" min="2" value="2" class="custom-dice-input">
+                            <div class="custom-dice-arrows">
+                                <button class="arrow-btn" onclick="adjustCustomDice(1)">▲</button>
+                                <button class="arrow-btn" onclick="adjustCustomDice(-1)">▼</button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="coin-toss-button"><a href="#" onclick="tossCoin()">Toss Coin</a></li>
             </ul>
             <div class="multiplier">
                 <label for="multiplier">Multiplier</label>
-                <input type="number" id="multiplier" value="1" placeholder="1" >
+                <div class="multiplier-input-container">
+                    <input type="number" id="multiplier" value="1" placeholder="1">
+                    <div class="multiplier-arrows">
+                        <button class="arrow-btn" onclick="adjustMultiplier(1)">▲</button>
+                        <button class="arrow-btn" onclick="adjustMultiplier(-1)">▼</button>
+                    </div>
+                </div>
+                <div class="multiplier-buttons">
+                    <button class="multiplier-btn" onclick="setMultiplier(1)">1x</button>
+                    <button class="multiplier-btn" onclick="setMultiplier(2)">2x</button>
+                    <button class="multiplier-btn" onclick="setMultiplier(3)">3x</button>
+                    <button class="multiplier-btn" onclick="setMultiplier(4)">4x</button>
+                    <button class="multiplier-btn" onclick="setMultiplier(5)">5x</button>
+                    <button class="multiplier-btn" onclick="setMultiplier(10)">10x</button>
+                </div>
+                <div class="reset-container">
+                    <button class="multiplier-btn reset-btn" onclick="resetValues()">Reset</button>
+                </div>
             </div>
         </div>
     </div>
@@ -193,16 +337,73 @@
     <script>
         function rollDice(diceType) {
             const multiplier = document.getElementById('multiplier').value;
-            window.history.replaceState({}, '', `/?multiplier=${multiplier}`);
-            window.location.href = `/${diceType}?multiplier=${multiplier}`;
+            const customDice = document.getElementById('customDice').value;
+            window.location.href = `/${diceType}?multiplier=${multiplier}&sides=${customDice}`;
+        }
+
+        function tossCoin() {
+            const multiplier = document.getElementById('multiplier').value;
+            const customDice = document.getElementById('customDice').value;
+            window.location.href = `/coin?multiplier=${multiplier}&sides=${customDice}`;
+        }
+
+        function setMultiplier(value) {
+            document.getElementById('multiplier').value = value;
+        }
+
+        function adjustMultiplier(change) {
+            const multiplierInput = document.getElementById('multiplier');
+            let currentValue = parseInt(multiplierInput.value) || 0;
+            currentValue += change;
+            
+            // Ensure value is at least 1
+            if (currentValue < 1) {
+                currentValue = 1;
+            }
+            
+            multiplierInput.value = currentValue;
+        }
+
+        function rollCustomDice() {
+            const customDiceValue = document.getElementById('customDice').value;
+            if (customDiceValue && parseInt(customDiceValue) >= 2) {
+                const multiplier = document.getElementById('multiplier').value;
+                window.history.replaceState({}, '', `/?multiplier=${multiplier}&sides=${customDiceValue}`);
+                window.location.href = `/dx?sides=${customDiceValue}&multiplier=${multiplier}`;
+            } else {
+                alert('Please enter a number greater than or equal to 2');
+            }
+        }
+        
+        function resetValues() {
+            document.getElementById('customDice').value = 2;
+            document.getElementById('multiplier').value = 1;
+            window.history.replaceState({}, '', '/');
+        }
+
+        function adjustCustomDice(change) {
+            const customDiceEl = document.getElementById('customDice');
+            let val = parseInt(customDiceEl.value) || 2;
+            val += change;
+            if (val < 2) val = 2;
+            customDiceEl.value = val;
         }
 
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const multiplier = urlParams.get('multiplier');
+            const sides = urlParams.get('sides');
+            
             if (multiplier) {
                 document.getElementById('multiplier').value = multiplier;
             }
+            
+            if (sides && parseInt(sides) >= 2) {
+                document.getElementById('customDice').value = sides;
+            }
+
+            // Fix for troubleshooting: log parameter values
+            console.log("Loaded with multiplier:", multiplier, "sides:", sides);
         }
     </script>
 </body>
