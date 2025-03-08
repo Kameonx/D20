@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Coin Toss Result</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             background-color: #1a1a1a;
@@ -19,9 +20,9 @@
             border-radius: 15px;
             box-shadow: 0 0 20px rgba(0,0,0,0.5);
             text-align: center;
-            max-width: 90%;
-            max-height: 90%;
-            overflow: auto;
+            width: 90%;
+            max-width: 500px;
+            margin: 0 auto;
         }
         h1 {
             color: #7289da;
@@ -70,6 +71,70 @@
         a:hover {
             background-color: #7289da;
             color: #ffffff;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                width: 85%;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .summary {
+                font-size: 1.1rem;
+            }
+            
+            .result-item, .result {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                align-items: flex-start;
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 1rem;
+                width: 95%;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .summary {
+                font-size: 1rem;
+            }
+            
+            .result-item, .result {
+                font-size: 1rem;
+                padding: 0.4rem;
+            }
+            
+            .result-list {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+                max-width: none;
+            }
+            
+            .result-item {
+                flex: 0 1 auto;
+                font-size: 0.9rem;
+                padding: 0.3rem;
+                margin: 0;
+            }
+            
+            a {
+                font-size: 1rem;
+                min-width: 100px;
+            }
         }
     </style>
 </head>
